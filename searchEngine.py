@@ -9,7 +9,7 @@
 # 10-9-18: defined crawl_web()
 # 10-8-18: improved get_all_links() by calling newly defined function union()
 # 10-2-18: defined get_all_links()
-# 9-28-18: start date; defined get_next_target()
+# 9-28-18: log start date; defined get_next_target()
 
 def get_page(url):
     try:
