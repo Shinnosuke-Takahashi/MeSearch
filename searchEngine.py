@@ -1,6 +1,7 @@
 # THIS CODE IS CURRENTLY UNDER DEVELOPMENT AND IS UPDATED REGULARLY.
 # This is a search engine under development.
 # THE FOLLOWING IS A LOG OF UPDATES:
+# 10-30-18: added record_user_clicks and modified add_to_index to include click count capability
 # 10-24-18: reverted add_to_index and lookup() and impoved add_to_index by removing duplicate URLs
 # 10-23-18: defined get_page using urllib library, edited def add_to_index to increase speed, edited lookup (decreases speed)
 # 10-19-18: revised crawl_web to include indexing capability
@@ -43,13 +44,23 @@ def get_all_links(page):
             break
     return links
 
+def record_user_click(index, keyword, url):
+	urls = lookup(index, keyword)
+	if urls:
+		for entry in urls:
+			if entry[0] == url:
+				entry[1] += 1
+
+
 def add_to_index(index, keyword, url):
     for entry in index:
         if entry[0] == keyword:
-        	if not url in entry[1]:
-            	entry[1].append(url)
+        	for element in entry[1]:
+        		if element[0] == url:
+        			return
+            entry[1].append([url,0])
             return
-    index.append([keyword, [url]])
+    index.append([keyword, [[url,0]]])
 
 def lookup(index, keyword):
     for entry in index:
